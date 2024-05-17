@@ -33,15 +33,16 @@ function generateGrid(squares) {
 }
 
 function addColourToSquare(e) {
-    console.log(e)
     let div = e.currentTarget
 
+    const rgb = randomRgbColor()
+
     if (e.type === "mouseenter" && e.buttons == 1) {
-        div.classList.add("current-color")
+        div.style.cssText+= ` background-color : rgb(${rgb[0]},${rgb[1]},${rgb[2]});`
     }
 
     if (e.type === "click") {
-        div.classList.add("current-color")
+        div.style.cssText+= ` background-color : rgb(${rgb[0]},${rgb[1]},${rgb[2]});`
     }
 
 
@@ -66,6 +67,21 @@ function getSquares() {
 
 function resetGrid(){
     const gridSquares = document.querySelectorAll(".grid-square")
-    gridSquares.forEach(i => i.classList.remove("current-color"))
+    gridSquares.forEach(i => i.style.removeProperty("background-color"))
 }
+
+function randomInteger(max) {
+    return Math.floor(Math.random()*(max + 1));
+}
+
+function randomRgbColor() {
+    const r = randomInteger(255);
+    const g = randomInteger(255);
+    const b = randomInteger(255);
+
+    return [r,g,b];
+
+}
+
+
 
