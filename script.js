@@ -18,7 +18,7 @@ generateGrid(16)
 
 function generateGrid(squares) {
     const totalSquares = squares * squares
-    const dimension = 640 / squares;
+    const dimension = (640 / squares ) - 1.33;
     for (let i = 0; i < totalSquares; i++) {
         const div = document.createElement("div")
         div.classList.add("grid-square")
