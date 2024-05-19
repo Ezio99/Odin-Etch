@@ -3,11 +3,12 @@ let container = document.querySelector("#Container")
 const button = document.querySelector("#Squares-request")
 const reset = document.querySelector("#Reset")
 const body = document.querySelector("body")
+let lightness = 100
 
 
 button.addEventListener("click", getSquares)
 
-reset.addEventListener("click",resetGrid)
+reset.addEventListener("click", resetGrid)
 
 generateGrid(16)
 
@@ -35,14 +36,14 @@ function generateGrid(squares) {
 function addColourToSquare(e) {
     let div = e.currentTarget
 
-    const rgb = randomRgbColor()
+    const hsl = randomHslColor()
 
     if (e.type === "mouseenter" && e.buttons == 1) {
-        div.style.cssText+= ` background-color : rgb(${rgb[0]},${rgb[1]},${rgb[2]});`
+        div.style.cssText += ` background-color : hsl(${hsl[0]},${hsl[1]}%,${hsl[2]}%);`
     }
 
     if (e.type === "click") {
-        div.style.cssText+= ` background-color : rgb(${rgb[0]},${rgb[1]},${rgb[2]});`
+        div.style.cssText += ` background-color : hsl(${hsl[0]},${hsl[1]}%,${hsl[2]}%);`
     }
 
 
@@ -51,7 +52,7 @@ function addColourToSquare(e) {
 function getSquares() {
     let squares = +prompt("Number of squares per side (<100)") // + makes it into a number
 
-    if(squares>100){
+    if (squares > 100) {
         alert("Please enter <100 squares per side")
         return
     }
@@ -65,21 +66,30 @@ function getSquares() {
 }
 
 
-function resetGrid(){
+function resetGrid() {
     const gridSquares = document.querySelectorAll(".grid-square")
     gridSquares.forEach(i => i.style.removeProperty("background-color"))
+    lightness = 100
 }
 
 function randomInteger(max) {
-    return Math.floor(Math.random()*(max + 1));
+    return Math.floor(Math.random() * (max + 1));
 }
 
-function randomRgbColor() {
-    const r = randomInteger(255);
-    const g = randomInteger(255);
-    const b = randomInteger(255);
+function randomHslColor() {
+    const h = randomInteger(360);
+    const s = randomInteger(100);
+    const l = lightness
 
-    return [r,g,b];
+    if (lightness > 0) {
+        lightness -= 10
+    }
+    else {
+        lightness = 100
+    }
+
+
+    return [h, s, l];
 
 }
 
